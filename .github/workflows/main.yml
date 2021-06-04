@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Automatic Translate on Push
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
+      - name: Setup (Node)
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.16.3'
+      - name: git Actions
+        uses: srt32/git-actions@v0.0.3
+
+      - name: Run translator
+        run: node src/translator.js
+
+      - name: Add all files
+        run: git add .
+      
+      - name: Commit files
+        run: git commit -m 'Adding translation by workflow'
+      
+      - name: Push files
+        run: git push
