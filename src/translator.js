@@ -14,8 +14,8 @@ function searchChatTranslation(key, searchValue, referenceInputLanguage, referen
   let inputLanguage = fresdeskFreshchatMapping[referenceInputLanguage];
   let outputLanguage = fresdeskFreshchatMapping[referenceOutputLanguage];
   if(outputLanguage) {
-    let referenceInputLanguagePath = `${__dirname}/Locales/Freshchat/${inputLanguage}.json`;
-    let referenceOutputLanguagePath = `${__dirname}/Locales/Freshchat/${outputLanguage}.json`;
+    let referenceInputLanguagePath = `${__dirname}/ReferenceLocales/Freshchat/${inputLanguage}.json`;
+    let referenceOutputLanguagePath = `${__dirname}/ReferenceLocales/Freshchat/${outputLanguage}.json`;
 
     let referenceInput = fs.readFileSync(referenceInputLanguagePath, 'utf8');
     let referenceOutout = fs.readFileSync(referenceOutputLanguagePath, 'utf8');
@@ -33,8 +33,8 @@ function searchChatTranslation(key, searchValue, referenceInputLanguage, referen
 
 function languageTranslator(inputLanguage = {}, referenceInputLanguage = '', referenceOutputLanguage = '') {
   let translatedLanguage = {};
-  let referenceInputLanguagePath = `${__dirname}/Locales/Freshdesk/${referenceInputLanguage}.json`;
-  let referenceOutputLanguagePath = `${__dirname}/Locales/Freshdesk/${referenceOutputLanguage}.json`;
+  let referenceInputLanguagePath = `${__dirname}/ReferenceLocales/Freshdesk/${referenceInputLanguage}.json`;
+  let referenceOutputLanguagePath = `${__dirname}/ReferenceLocales/Freshdesk/${referenceOutputLanguage}.json`;
 
   for(key in inputLanguage) {
     let searchValue = String(inputLanguage[key]);
@@ -63,10 +63,10 @@ function languageTranslator(inputLanguage = {}, referenceInputLanguage = '', ref
       let memoisedResult = memoisedStorageObject[key];
       let referenceOutoutPath;
       if(memoisedStorageObject[key].location === 'Freshdesk') {
-        referenceOutoutPath = `${__dirname}/Locales/${memoisedResult.location}/${referenceOutputLanguage}.json`;
+        referenceOutoutPath = `${__dirname}/ReferenceLocales/${memoisedResult.location}/${referenceOutputLanguage}.json`;
       } else {
         if(fresdeskFreshchatMapping[referenceOutputLanguage]) {
-          referenceOutoutPath = `${__dirname}/Locales/${memoisedResult.location}/${fresdeskFreshchatMapping[referenceOutputLanguage]}.json`;
+          referenceOutoutPath = `${__dirname}/ReferenceLocales/${memoisedResult.location}/${fresdeskFreshchatMapping[referenceOutputLanguage]}.json`;
         }
       }
       
@@ -92,7 +92,7 @@ function startTranslation() {
     let translatedJson = languageTranslator(inputLanguage, 'en', language);
     // console.log(`[TRANSLATED LANGUAGE] : ${language}`, translatedJson);
 
-    writeJsontoFile(translatedJson, `${__dirname}/output/locales/${language}.json`)
+    writeJsontoFile(translatedJson, `${__dirname}/locales/${language}.json`)
   }
 };
 
