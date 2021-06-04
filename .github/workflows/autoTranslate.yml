@@ -20,20 +20,9 @@ jobs:
         with:
           node-version: '12.16.3'
 
-      - name: git Actions
-        uses: srt32/git-actions@v0.0.3
-
       - name: Run translator
         run: node src/translator.js
-      - name: pwd
-        run: pwd
-      - name: ls
-        run: ls
-      - name: status
-        run: git status
-      - name: pring
-        run: cat src/output/locales/ar.json
-        
+
       - name: Git add, commit and push
         uses: EndBug/add-and-commit@v7
         with:
