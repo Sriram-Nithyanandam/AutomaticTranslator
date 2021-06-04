@@ -31,6 +31,8 @@ jobs:
         run: ls
       - name: status
         run: git status
+      - name: pring
+        run: cat src/output/locales/ar.json
         
       - name: Git add, commit and push
         uses: EndBug/add-and-commit@v7
