@@ -19,29 +19,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '12.16.3'
+
       - name: git Actions
         uses: srt32/git-actions@v0.0.3
 
       - name: Run translator
         run: node src/translator.js
         
-      - name: Adding User email
-        run: git config --global user.email ${{ secrets.USEREMAIL }}
-      
-      - name: Adding User name
-        run: git config --global user.name ${{ secrets.USERNAME }}
-      
-      - name: Print Git status
-        run: git status
-
-      - name: Add all files
-        run: git add .
-      
-      - name: Print Git status
-        run: git status
-      
-      - name: Commit files
-        run: git commit -m 'Adding translation by workflow'
-      
-      - name: Push files
-        run: git push
+      - name: Git add, commit and push
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actor
+          message: 'Adding translations by workflow'
