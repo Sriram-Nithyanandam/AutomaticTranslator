@@ -24,6 +24,12 @@ jobs:
 
       - name: Run translator
         run: node src/translator.js
+        
+      - name: Adding User email
+        run: git config --global user.email ${{ secrets.USEREMAIL }}
+      
+      - name: Adding User name
+        run: git config --global user.name ${{ secrets.USERNAME }}
 
       - name: Add all files
         run: git add .
