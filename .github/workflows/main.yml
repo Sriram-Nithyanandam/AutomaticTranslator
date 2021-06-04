@@ -30,6 +30,9 @@ jobs:
       
       - name: Adding User name
         run: git config --global user.name ${{ secrets.USERNAME }}
+      
+      - name: Print Git status
+        run: git status
 
       - name: Add all files
         run: git add .
