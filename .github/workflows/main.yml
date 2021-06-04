@@ -25,6 +25,10 @@ jobs:
 
       - name: Run translator
         run: node src/translator.js
+      - name: pwd
+        run: pwd
+      - name: status
+        run: git status
         
       - name: Git add, commit and push
         uses: EndBug/add-and-commit@v7
