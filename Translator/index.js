@@ -7,7 +7,7 @@ const inputLanguage = require('./input');
 const writeJsontoFile = require('./Utils/writeToFile');
 
 const memoisedStorageObject = Object.keys(inputLanguage).reduce((initialObject, key) => { initialObject[key] = null; return initialObject; }, {})
-const folderPath = path.join(__dirname, 'output/locales');
+const folderPath = path.join(__dirname, '../locales');
 
 function searchChatTranslation(key, searchValue, referenceInputLanguage, referenceOutputLanguage) {
   let translatedKey = searchValue;
@@ -92,7 +92,7 @@ function startTranslation() {
     let translatedJson = languageTranslator(inputLanguage, 'en', language);
     // console.log(`[TRANSLATED LANGUAGE] : ${language}`, translatedJson);
 
-    writeJsontoFile(translatedJson, `${__dirname}/locales/${language}.json`)
+    writeJsontoFile(translatedJson, `${__dirname}/../locales/${language}.json`)
   }
 };
 
@@ -101,7 +101,7 @@ function createDirectoryAndStartTranslation() {
     if (err) {
       console.error(err);
     }
-    console.log('created new folder');
+    console.log('Created new folder');
     let start = new Date(Date.now());
     startTranslation();
     let end = new Date(Date.now());
@@ -114,7 +114,7 @@ if (!fs.existsSync(folderPath)) {
   createDirectoryAndStartTranslation();
 } else {
   fs.rmdir(folderPath, { recursive: true }, () => { 
-    console.log('removed existing folder'); 
+    console.log('Removed existing folder'); 
     createDirectoryAndStartTranslation();
   });
 }
