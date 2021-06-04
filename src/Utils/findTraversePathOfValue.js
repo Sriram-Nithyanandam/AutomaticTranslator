@@ -23,4 +23,3 @@ module.exports = (value, obj) => {
   search(obj);
   return path;
 };
-  

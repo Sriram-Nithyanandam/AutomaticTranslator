@@ -14,8 +14,8 @@ function searchChatTranslation(key, searchValue, referenceInputLanguage, referen
   let inputLanguage = fresdeskFreshchatMapping[referenceInputLanguage];
   let outputLanguage = fresdeskFreshchatMapping[referenceOutputLanguage];
   if(outputLanguage) {
-    let referenceInputLanguagePath = `/Users/snithyanandam/Desktop/Translation/src/Locales/Freshchat/${inputLanguage}.json`;
-    let referenceOutputLanguagePath = `/Users/snithyanandam/Desktop/Translation/src/Locales/Freshchat/${outputLanguage}.json`;
+    let referenceInputLanguagePath = `${__dirname}/Locales/Freshchat/${inputLanguage}.json`;
+    let referenceOutputLanguagePath = `${__dirname}/Locales/Freshchat/${outputLanguage}.json`;
 
     let referenceInput = fs.readFileSync(referenceInputLanguagePath, 'utf8');
     let referenceOutout = fs.readFileSync(referenceOutputLanguagePath, 'utf8');
@@ -32,12 +32,12 @@ function searchChatTranslation(key, searchValue, referenceInputLanguage, referen
 }
 
 function languageTranslator(inputLanguage = {}, referenceInputLanguage = '', referenceOutputLanguage = '') {
-	let translatedLanguage = {};
-  let referenceInputLanguagePath = `/Users/snithyanandam/Desktop/Translation/src/Locales/Freshdesk/${referenceInputLanguage}.json`;
-  let referenceOutputLanguagePath = `/Users/snithyanandam/Desktop/Translation/src/Locales/Freshdesk/${referenceOutputLanguage}.json`;
+  let translatedLanguage = {};
+  let referenceInputLanguagePath = `${__dirname}/Locales/Freshdesk/${referenceInputLanguage}.json`;
+  let referenceOutputLanguagePath = `${__dirname}/Locales/Freshdesk/${referenceOutputLanguage}.json`;
 
-	for(key in inputLanguage) {
-		let searchValue = String(inputLanguage[key]);
+  for(key in inputLanguage) {
+    let searchValue = String(inputLanguage[key]);
 
     if(!memoisedStorageObject[key]) {
       let referenceInput = fs.readFileSync(referenceInputLanguagePath, 'utf8');
@@ -63,10 +63,10 @@ function languageTranslator(inputLanguage = {}, referenceInputLanguage = '', ref
       let memoisedResult = memoisedStorageObject[key];
       let referenceOutoutPath;
       if(memoisedStorageObject[key].location === 'Freshdesk') {
-        referenceOutoutPath = `/Users/snithyanandam/Desktop/Translation/src/Locales/${memoisedResult.location}/${referenceOutputLanguage}.json`;
+        referenceOutoutPath = `${__dirname}/Locales/${memoisedResult.location}/${referenceOutputLanguage}.json`;
       } else {
         if(fresdeskFreshchatMapping[referenceOutputLanguage]) {
-          referenceOutoutPath = `/Users/snithyanandam/Desktop/Translation/src/Locales/${memoisedResult.location}/${fresdeskFreshchatMapping[referenceOutputLanguage]}.json`;
+          referenceOutoutPath = `${__dirname}/Locales/${memoisedResult.location}/${fresdeskFreshchatMapping[referenceOutputLanguage]}.json`;
         }
       }
       
@@ -79,9 +79,9 @@ function languageTranslator(inputLanguage = {}, referenceInputLanguage = '', ref
         translatedLanguage[key] = searchValue;
       }
     }
-	}
+  }
 
-	return translatedLanguage;
+  return translatedLanguage;
 };
 
 function startTranslation() {
@@ -92,7 +92,7 @@ function startTranslation() {
     let translatedJson = languageTranslator(inputLanguage, 'en', language);
     // console.log(`[TRANSLATED LANGUAGE] : ${language}`, translatedJson);
 
-    writeJsontoFile(translatedJson, `/Users/snithyanandam/Desktop/Translation/src/output/locales/${language}.json`)
+    writeJsontoFile(translatedJson, `${__dirname}/output/locales/${language}.json`)
   }
 };
 
@@ -101,6 +101,7 @@ function createDirectoryAndStartTranslation() {
     if (err) {
       console.error(err);
     }
+    console.log('created new folder');
     let start = new Date(Date.now());
     startTranslation();
     let end = new Date(Date.now());
@@ -112,5 +113,8 @@ function createDirectoryAndStartTranslation() {
 if (!fs.existsSync(folderPath)) {
   createDirectoryAndStartTranslation();
 } else {
-  fs.rmdir(folderPath, { recursive: true }, () => createDirectoryAndStartTranslation());
+  fs.rmdir(folderPath, { recursive: true }, () => { 
+    console.log('removed existing folder'); 
+    createDirectoryAndStartTranslation();
+  });
 }
