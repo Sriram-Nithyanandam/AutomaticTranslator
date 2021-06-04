@@ -37,6 +37,9 @@ jobs:
       - name: Add all files
         run: git add .
       
+      - name: Print Git status
+        run: git status
+      
       - name: Commit files
         run: git commit -m 'Adding translation by workflow'
       
