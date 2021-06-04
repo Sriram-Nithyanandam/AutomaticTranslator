@@ -21,7 +21,7 @@ jobs:
           node-version: '12.16.3'
 
       - name: Run translator
-        run: node src/translator.js
+        run: node Translator
 
       - name: Git add, commit and push
         uses: EndBug/add-and-commit@v7
